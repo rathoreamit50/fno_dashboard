@@ -1,2 +1,7 @@
 # Vite environment variables
+
 VITE_API_URL=https://fno-backend.onrender.com/api/top-fno-picks
+
+# frontend/.env
+
+VITE_API_BASE_URL=https://fno-backend.onrender.com/api
