@@ -1,0 +1,20 @@
+
+services:
+  - type: web
+    name: fno-backend
+    env: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "uvicorn server:app --host 0.0.0.0 --port 10000"
+    plan: free
+    branch: main
+    envVars:
+      - key: PORT
+        value: 10000
+
+  - type: web
+    name: fno-frontend
+    env: node
+    buildCommand: "npm install"
+    startCommand: "npm run build && npm run preview"
+    plan: free
+    branch: main
