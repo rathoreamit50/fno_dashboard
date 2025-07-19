@@ -2,9 +2,13 @@
 version: "3.8"
 services:
   backend:
-    build: ./backend
+    build:
+      context: ./backend
     ports:
       - "8000:8000"
+    volumes:
+      - ./backend:/app
+      - ./backend/Weekly_FNO_Analysis_With_OI.xlsx:/app/Weekly_FNO_Analysis_With_OI.xlsx
   frontend:
     build: ./frontend
     ports:
