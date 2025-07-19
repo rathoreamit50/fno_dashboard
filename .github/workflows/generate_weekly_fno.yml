@@ -1,36 +1,36 @@
-
-name: Generate Weekly FNO Excel
+name: Weekly FNO Report Generator
 
 on:
   schedule:
-    - cron: "30 3 * * 1"  # Every Monday at 9:00 AM IST (03:30 UTC)
-  workflow_dispatch:
+    - cron: "30 3 * * 1" # Every Monday at 9:00 AM IST (3:30 UTC)
+  workflow_dispatch: # Allows manual triggering from GitHub UI
 
 jobs:
-  build:
+  generate-and-commit:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.11'
+          python-version: "3.11"
 
       - name: Install dependencies
         run: |
-          pip install yfinance pandas openpyxl
+          python -m pip install --upgrade pip
+          pip install -r backend/requirements.txt
 
-      - name: Generate Excel file
+      - name: Generate Excel Report
         run: |
-          python backend/scripts/generate_excel_data.py
+          python backend/weekly_fno_generator.py
 
-      - name: Commit and push
+      - name: Commit and push report
         run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
-          git add backend/Weekly_FNO_Analysis_With_OI.xlsx
-          git commit -m "🔄 Weekly FNO Excel updated by GitHub Action" || echo "No changes"
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add Weekly_FNO_Analysis_With_OI.xlsx
+          git commit -m "📊 Auto-update weekly FNO report"
           git push
