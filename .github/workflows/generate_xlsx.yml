@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GH_PAT }} # ✅ Very important
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -29,11 +31,10 @@ jobs:
           python weekly_fno_generator.py
           cd ..
 
-      - name: Push updated XLSX to repo
+      - name: Commit and Push XLSX
         run: |
           git config --global user.email "github-actions@github.com"
           git config --global user.name "github-actions"
-          git remote set-url origin https://x-access-token:${{ secrets.GH_PAT }}@github.com/${{ github.repository }}
           git add backend/Weekly_FNO_Analysis_With_OI.xlsx
           git commit -m "Auto-update weekly XLSX" || echo "No changes to commit"
           git push
