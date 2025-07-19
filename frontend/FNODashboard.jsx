@@ -7,7 +7,9 @@ export default function FNODashboard() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch("http://localhost:8000/api/top-fno-picks");
+        const res = await fetch(
+          "https://fno-backend.onrender.com/api/top-fno-picks"
+        );
         const data = await res.json();
         setStocks(data);
       } catch (error) {
