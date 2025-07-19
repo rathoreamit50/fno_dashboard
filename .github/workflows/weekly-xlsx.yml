@@ -1,0 +1,35 @@
+name: Generate Weekly FNO XLSX
+
+on:
+  schedule:
+    - cron: "0 3 * * 1" # Runs every Monday 08:30 AM IST
+  workflow_dispatch: # Manual trigger if needed
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+
+      - name: Install dependencies
+        run: |
+          cd backend
+          pip install -r requirements.txt
+
+      - name: Run weekly generator
+        run: |
+          cd backend
+          python weekly_fno_generator.py
+
+      - name: Upload .xlsx as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: Weekly_FNO_Analysis
+          path: backend/Weekly_FNO_Analysis_With_OI.xlsx
