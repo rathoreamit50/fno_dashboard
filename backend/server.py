@@ -1,10 +1,23 @@
 from fastapi import FastAPI
+from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 import pandas as pd
 from apscheduler.schedulers.background import BackgroundScheduler
 from weekly_fno_generator import generate_weekly_fno_file
 
 app = FastAPI()
+
+@app.get("/")
+async def root():
+    return JSONResponse({"message": "F&O Backend is running. Use /api/top-fno-picks to get data."})
+
+@app.get("/api/top-fno-picks")
+async def fno_top_picks():
+    try:
+        data = get_top_picks()
+        return data
+    except Exception as e:
+        return {"error": str(e)}
 
 app.add_middleware(
     CORSMiddleware,
