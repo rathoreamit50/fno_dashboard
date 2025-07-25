@@ -44,7 +44,7 @@ def generate_weekly_fno_file():
         for r in dataframe_to_rows(df, index=False, header=True):
             ws.append(r)
 
-        wb.save("Weekly_FNO_Analysis_With_OI.xlsx")
+        wb.save("backend/Weekly_FNO_Analysis_With_OI.xlsx")
         print("✅ Excel generated successfully.")
     except Exception as e:
         print(f"Error generating weekly FNO file: {e}")
