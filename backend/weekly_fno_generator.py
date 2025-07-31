@@ -15,7 +15,7 @@ def generate_weekly_fno_file():
         for symbol in stock_list:
             try:
                 ticker = yf.Ticker(symbol)
-                hist = ticker.history(period="1d")
+                hist = ticker.history(period="7d")
 
                 if hist.empty or len(hist) < 2:
                     continue
